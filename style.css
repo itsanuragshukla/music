@@ -543,11 +543,11 @@ color:#fff;
 }
 
 .selectQuality{
-width:30vw;
+width:35vw;
 display:flex;
 align-items:center;
 justify-content:center;
 height:100%;
-font-size:1em;
+font-size:0.9em;
 border:0px solid red;
 }
