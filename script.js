@@ -477,3 +477,6 @@ addcards();
 playselected(id);
 aud.currentTime=prevCurr;
 }
+function setVolume(val){
+aud.volume = val/100;
+}
