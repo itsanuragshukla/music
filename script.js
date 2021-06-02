@@ -472,9 +472,8 @@ songs=window[(`songsEn${quality}`)];
 data=dataEn;
 art=artEng;
 }
-play();
-lastsong = songs.findIndex(x => x.name === songId);
-playselected(lastsong);
-aud.currentTime=prevCurr;
+var id=(songs.findIndex(x => x.name === songId));
 addcards();
+playselected(id);
+aud.currentTime=prevCurr;
 }
