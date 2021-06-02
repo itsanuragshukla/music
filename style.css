@@ -36,7 +36,7 @@ display :flex ;
 align-items: center ;
 justify-content :center ;
 min-width:33vw;
-height:50px;
+height:40px;
 max-width:100vw ;
 border:2px solid #45a29e ;
 box-sizing:border-box;
@@ -44,7 +44,7 @@ border-radius:25px;
 flex-direction:row ;
 flex-wrap:nowrap ;
 overflow :auto ;
-font-size:1em ;
+font-size:0.95em ;
 font-weight :1000 ;
 color:#66fcf1;
 }
@@ -130,7 +130,7 @@ display:flex;
 height:60px;
 justify-content:space-between ;
 align-items:center ;
-font-size:1.8em;
+font-size:1.5em;
 color:#66fcf1;
 font-style: italic;
 font-weight: 1000;
@@ -532,22 +532,23 @@ border:0px solid red;
 .quality{
 color:#66fcf1;
 height:100%;
-width:15vw;
-font-size:1em;
+width:auto;
+font-size:0.9em;
 border:0px solid green;
 background:#1f2833;
 outline:none;
 }
+
+.selectQuality , label{
+width:auto;
+display:flex;
+align-items:center;
+justify-content:space-around;
+height:100%;
+border:0px solid red;
+}
 label{
 color:#fff;
 }
-
-.selectQuality{
-width:35vw;
-display:flex;
-align-items:center;
-justify-content:center;
-height:100%;
-font-size:0.9em;
-border:0px solid red;
-}
+img[src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]{
+       display: none; }
