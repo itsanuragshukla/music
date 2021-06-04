@@ -2,13 +2,13 @@ var lastsong = 0;
 var aud = new Audio();
 var status = "paused";
 var content = document.getElementById("content");
-var songs= songsHi44;
-var data =dataHi;
+var songs = songsHi44;
+var data = dataHi;
 var art = artHi;
-var quality=44;
-var currentCategory="hindi";
+var quality = 44;
+var currentCategory = "hindi";
 var list = function(id, name, author) {
-var artSrc = (art.find(x => x.name === songs[id].name+"_96").url);
+    var artSrc = (art.find(x => x.name === songs[id].name + "_96").url);
 
     return `    
        <div class="cardlist" id ="cardlist${id}" onclick="playselected(${id})"> 
@@ -24,22 +24,22 @@ var artSrc = (art.find(x => x.name === songs[id].name+"_96").url);
 };
 
 
-function addcards(){
-var i = 0;
-var aHTML = [];
-while (i<songs.length) {
-var p = songs[i].name;
+function addcards() {
+    var i = 0;
+    var aHTML = [];
+    while (i < songs.length) {
+        var p = songs[i].name;
 
-var songName=(data.find(x => x.id === p).title);
-var songArtist=(data.find(x => x.id === p).artist);
-aHTML.push(list(i, songName, songArtist));
-  i++
-  
-}
+        var songName = (data.find(x => x.id === p).title);
+        var songArtist = (data.find(x => x.id === p).artist);
+        aHTML.push(list(i, songName, songArtist));
+        i++
 
-var sHTML = aHTML.join('');
-var domElmt = $(sHTML);
-$('#content').prepend(domElmt);
+    }
+
+    var sHTML = aHTML.join('');
+    var domElmt = $(sHTML);
+    $('#content').prepend(domElmt);
 
 }
 
@@ -48,11 +48,10 @@ function openSearch() {
     $("#name").toggleClass("searchActive");
     $("#searchBar").toggleClass("searchActive")
     $("#searchBar").val("");
-    if(!$("#searchBar").hasClass("searchActive")){
-        $("#searchBar").focus();	
-    }
-    else{
-    	    $("#searchBar").blur();
+    if (!$("#searchBar").hasClass("searchActive")) {
+        $("#searchBar").focus();
+    } else {
+        $("#searchBar").blur();
     }
 
     $(".cardlist").each(function() {
@@ -106,29 +105,29 @@ var isPlaying = aud.currentTime > 0 && !aud.paused && !aud.ended && aud.readySta
 
 function playselected(id) {
 
-var songName=(data.find(x => x.id === songs[id].name).title);
-var songArtist=(data.find(x => x.id === songs[id].name).artist);
+    var songName = (data.find(x => x.id === songs[id].name).title);
+    var songArtist = (data.find(x => x.id === songs[id].name).artist);
     aud.src = songs[id].url;
     $(`#cardlist${lastsong}`).css("background", "");
     lastsong = id;
     $(`#cardlist${lastsong}`).css("background", "#501f3a");
     $("#title").html(songName);
     $("#artist").html(songArtist);
-    var artSrc = (art.find(x => x.name === songs[lastsong].name+"_192").url);
-    $("#artwork").attr("src",artSrc);
+    var artSrc = (art.find(x => x.name === songs[lastsong].name + "_192").url);
+    $("#artwork").attr("src", artSrc);
     $(".footertitle").html(songName);
     $(".footerauthor").html(songArtist);
     if (isPlaying) {
         play();
     }
-  setLyrics(id);
+    setLyrics(id);
     duration();
     play();
 }
 
 function next() {
     if (isPlaying) {
-        play();
+        //     play();
     }
     $(`#cardlist${lastsong}`).css("background", "");
     lastsong += 1;
@@ -138,16 +137,15 @@ function next() {
         lastsong = 0;
         $(`#cardlist${lastsong}`).css("background", "#501f3a");
     }
-var songName=(data.find(x => x.id === songs[lastsong].name).title);
-var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
-    aud.src = songs[lastsong].url;
     status = "playing";
-    setNots(songName, songArtist, status,songs[lastsong].name);
-    
+    setNots(lastsong,status);
+    aud.src = songs[lastsong].url;
+	var songName = (data.find(x => x.id === songs[lastsong].name).title);
+	var songArtist = (data.find(x => x.id === songs[lastsong].name).artist);	
     $("#title").html(songName);
     $("#artist").html(songArtist);
-    var artSrc = (art.find(x => x.name === songs[lastsong].name+"_192").url);
-    $("#artwork").attr("src",artSrc);
+    var artSrc = (art.find(x => x.name === songs[lastsong].name + "_192").url);
+    $("#artwork").attr("src", artSrc);
     $(".footertitle").html(songName);
     $(".footerauthor").html(songArtist);
     setLyrics(lastsong);
@@ -156,7 +154,7 @@ var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
 
 function prev() {
     if (isPlaying) {
-        play();
+        //    play();
     }
     $(`#cardlist${lastsong}`).css("background", "");
     lastsong -= 1;
@@ -166,16 +164,17 @@ function prev() {
         lastsong = (songs.length - 1);
         $(`#cardlist${lastsong}`).css("background", "#501f3a");
     }
-var songName=(data.find(x => x.id === songs[lastsong].name).title);
-var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
+    var songName = (data.find(x => x.id === songs[lastsong].name).title);
+    var songArtist = (data.find(x => x.id === songs[lastsong].name).artist);
+    status = "playing";
+    setNots(lastsong, status);
     aud.src = songs[lastsong].url;
     $("#title").html(songName);
     $("#artist").html(songArtist);
-    $(".footertitle").html(songName);var artSrc = (art.find(x => x.name === songs[lastsong].name+"_192").url);
-    $("#artwork").attr("src",artSrc);
-    status = "playing";
-    setNots(songName, songArtist, status,songs[lastsong].name);
-    
+    $(".footertitle").html(songName);
+    var artSrc = (art.find(x => x.name === songs[lastsong].name + "_192").url);
+    $("#artwork").attr("src", artSrc);
+
     $(".footerauthor").html(songArtist);
     setLyrics(lastsong);
     play();
@@ -188,18 +187,16 @@ function play() {
         status = "playing";
         $("#playbtn").html("<path d='M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z'>");
         $("#footerplaybtn").html("<path d='M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z'>");
-var songName=(data.find(x => x.id === songs[lastsong].name).title);
-var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
-        setNots(songName, songArtist, status,songs[lastsong].name);
+
     } else {
         aud.pause();
         status = "paused";
         $("#playbtn").html("<path d='M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z'/>");
         $("#footerplaybtn").html("<path d='M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z'/>");
-var songName=(data.find(x => x.id === songs[lastsong].name).title);
-var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
-        setNots(songName, songArtist, status ,songs[lastsong].name);
+
     }
+    setNots(lastsong, status);
+    
 }
 
 function mint() {
@@ -247,10 +244,8 @@ function stop() {
     aud.pause();
     $("#playbtn").html("<path d='M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z'/>");
     $("#footerplaybtn").html("<path d='M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z'/>");
-  var songName=(data.find(x => x.id === songs[lastsong].name).title);
-  var songArtist=(data.find(x => x.id === songs[lastsong].name).artist);
-        status = "paused";
-    setNots(songName, songArtist, status,songs[lastsong].name);
+    status = "paused";
+    setNots(lastsong, status);
     aud.currentTime = 0;
 }
 
@@ -354,7 +349,8 @@ const actionHandlers = [
         maxt()
     }],
     ['seekto', (details) => {
-        /* ... */ }],
+        /* ... */
+    }],
 ];
 
 for (const [action, handler] of actionHandlers) {
@@ -365,7 +361,11 @@ for (const [action, handler] of actionHandlers) {
     }
 }
 
-function setNots(title, artist, status,name) {
+function setNots(lastsong, status) {
+
+var title = (data.find(x => x.id === songs[lastsong].name).title);
+var artist = (data.find(x => x.id === songs[lastsong].name).artist);
+var name = songs[lastsong].name;
 
     if ("mediaSession" in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -373,32 +373,32 @@ function setNots(title, artist, status,name) {
             artist: artist,
             //   album: 'Songs',
             artwork: [{
-                    src: (art.find(x => x.name === name+"_96").url),
+                    src: (art.find(x => x.name === name + "_96").url),
                     sizes: '96x96',
                     type: 'image/jpg'
                 },
                 {
-                    src: (art.find(x => x.name === name+"_128").url),
+                    src: (art.find(x => x.name === name + "_128").url),
                     sizes: '128x128',
                     type: 'image/jpg'
                 },
                 {
-                    src: (art.find(x => x.name === name+"_192").url),
+                    src: (art.find(x => x.name === name + "_192").url),
                     sizes: '192x192',
                     type: 'image/jpg'
                 },
                 {
-                    src: (art.find(x => x.name === name+"_256").url),
+                    src: (art.find(x => x.name === name + "_256").url),
                     sizes: '256x256',
                     type: 'image/jpg'
                 },
                 {
-                    src: (art.find(x => x.name === name+"_384").url),
+                    src: (art.find(x => x.name === name + "_384").url),
                     sizes: '384x384',
                     type: 'image/jpg'
                 },
                 {
-                    src: (art.find(x => x.name === name+"_512").url),
+                    src: (art.find(x => x.name === name + "_512").url),
                     sizes: '512x512',
                     type: 'image/jpg'
                 },
@@ -416,67 +416,69 @@ function getIndex(i) {
     return index;
 }
 
-function getArtIndex(i,arr) {
-    var index = arr.map(function (obj) { return obj.name;}).indexOf(i);
+function getArtIndex(i, arr) {
+    var index = arr.map(function(obj) {
+        return obj.name;
+    }).indexOf(i);
     return index;
-   
+
 }
 
-function switchCategory(e){
-lastsong=0;
-Array.from(document.querySelectorAll('.activeCategory')).forEach((el) => el.classList.remove('activeCategory'));
-e.classList.add("activeCategory");
-content.innerHTML='';
-currentCategory=e.id;
-if(e.id=="hindi"){
-songs=window[(`songsHi${quality}`)];
-data=dataHi;
-art=artHi;
-}
-if(e.id=="english"){
-songs=window[(`songsEn${quality}`)];
-data=dataEn;
-art=artEng;
-}
-addcards();
-}
-
-function setLyrics(e){
-if("lyrics" in data[e]==true){
-var lyrics=data.find(x => x.id === songs[e].name).lyrics;
-if(lyrics=="null"){
-$("#sideNav").text("Sorry, Lyrics for this song is not available yet");            
-}
-else{
-$("#sideNav").text(" ");            
-document.getElementById("sideNav").innerText=(lyrics);
-}
-}else{
-$("#sideNav").text("You don't need the lyrics for this song. I know that");            
-}
+function switchCategory(e) {
+    lastsong = 0;
+    Array.from(document.querySelectorAll('.activeCategory')).forEach((el) => el.classList.remove('activeCategory'));
+    e.classList.add("activeCategory");
+    content.innerHTML = '';
+    currentCategory = e.id;
+    if (e.id == "hindi") {
+        songs = window[(`songsHi${quality}`)];
+        data = dataHi;
+        art = artHi;
+    }
+    if (e.id == "english") {
+        songs = window[(`songsEn${quality}`)];
+        data = dataEn;
+        art = artEng;
+    }
+    addcards();
 }
 
+function setLyrics(e) {
+    if ("lyrics" in data[e] == true) {
+        var lyrics = data.find(x => x.id === songs[e].name).lyrics;
+        if (lyrics == "null") {
+            $("#sideNav").text("Sorry, Lyrics for this song is not available yet");
+        } else {
+            $("#sideNav").text(" ");
+            document.getElementById("sideNav").innerText = (lyrics);
+        }
+    } else {
+        $("#sideNav").text("You don't need the lyrics for this song. I know that");
+    }
+}
 
-function qChange(e){
-quality=e.value;
-content.innerHTML='';
-var songId = songs[lastsong].name;
-var prevCurr= aud.currentTime;
-if(currentCategory=="hindi"){
-songs=window[(`songsHi${quality}`)];
-data=dataHi;
-art=artHi;
+
+function qChange(e) {
+    quality = e.value;
+    content.innerHTML = '';
+    var songId = songs[lastsong].name;
+    var prevCurr = aud.currentTime;
+    if (currentCategory == "hindi") {
+        songs = window[(`songsHi${quality}`)];
+        data = dataHi;
+        art = artHi;
+    }
+    if (currentCategory == "english") {
+        songs = window[(`songsEn${quality}`)];
+        data = dataEn;
+        art = artEng;
+    }
+    var id = (songs.findIndex(x => x.name === songId));
+    addcards();
+    playselected(id);
+    aud.currentTime = prevCurr;
 }
-if(currentCategory=="english"){
-songs=window[(`songsEn${quality}`)];
-data=dataEn;
-art=artEng;
-}
-var id=(songs.findIndex(x => x.name === songId));
-addcards();
-playselected(id);
-aud.currentTime=prevCurr;
-}
-function setVolume(val){
-aud.volume = val/100;
+
+function setVolume(val) {
+    aud.volume = val / 100;
 }
